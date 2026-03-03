@@ -19,6 +19,7 @@ BASE_PRICES = {
         "Tacos": 12,
         "Iron": 5
     }
+}
         
 demand_modifier = {
     "Fuel": 1.0,
