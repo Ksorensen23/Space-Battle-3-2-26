@@ -25,14 +25,7 @@ def check_cargo(__name__):
         print("Go to a shipyard to increase.")
     if CargoCheck < Max_Weight:
         print("continuing...")
-        
-
-
-
-
-
-
-
+       
 
 def Shipyard():
     global Max_Weight
@@ -86,8 +79,6 @@ def StatsBoard():
     print("*                                                     *")
     print("*******************************************************")
     Shipyard()
-
-
 
 
 if __name__ == "__main__":
