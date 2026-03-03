@@ -7,10 +7,6 @@ CurrentWEIGHT = 0
 IronWEIGHT = 10
 FuelWEIGHT = 5
 TacosWEIGHT = 1
-credits = 300
-Iron = 10
-Tacos = 1
-Fuel = 50
 
 alive == True
   while True:     
