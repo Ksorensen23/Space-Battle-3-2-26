@@ -3,6 +3,35 @@ import sys
 import random
 import json
 
+#Start of filechecker
+
+filePath = "player_save.json";
+
+try:
+    with open(filePath, "r") as file:
+        data = json.load(file);
+    print("json file found and successfully loaded.");
+
+    player = {
+    "name": "Ace",
+    "credits": 100,
+    "location": "Earth",
+    "fuel": 50,
+    "max_weight": 100,
+    "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
+    "alive": True
+    }
+
+except FileNotFoundError:
+    print("No file named", filePath, "was found.");
+
+except json.JSONDecodeError:
+    print("Error, failed to decode json from the file.");
+
+
+#>End of filechecker=====================
+
+
 Max_Weight = 50
 
 CurrentWEIGHT = 0
