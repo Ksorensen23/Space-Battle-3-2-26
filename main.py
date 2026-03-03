@@ -151,7 +151,7 @@ def StatsBoard():
   #=================== 
   # Liam's code
 def travel_event(player): # random event function
-    Atmodes = ["You fly past a dying star...", "You pass by an abandoned satellite.", "A comet goes by as you travel.", "you pass through a solar system with two stars orbiting each other.", "Another trader ship passes by, sharing their greetings.", "A space whale floats close and looks at you curiously before floating away.", "You witness a black hole feeding on a red giant as you travel.", "You exit warp travel to refill your water on an ocean planet before continuing to your destination.", "You narrowly miss a star eater's tail when you pass close by.", "A ship called 'The Hamilton' offers to update your ships firmware before continuing on."] # the flavour text for traveling
+    Atmodes = ["You fly past a dying star...", "You pass by an abandoned satellite.", "A comet goes by as you travel.", "You pass through a solar system with two stars orbiting each other.", "Another trader ship passes by, sharing their greetings.", "A space whale floats close and looks at you curiously before floating away.", "You witness a black hole feeding on a red giant as you travel.", "You exit warp travel to refill your water on an ocean planet before continuing to your destination.", "You narrowly miss a star eater's tail when you pass close by.", "A ship called 'The Hamilton' offers to update your ships firmware before continuing on."] # the flavour text for traveling
     typewriter(Atmodes[random.randint(0, len(Atmodes)-1)], 0.04)
     if random.randint(0, 100) < 20: # 20% chance of happening
         typewriter("\n!!! ALERT: UNKNOWN VESSEL SPOTTED !!! Space Pirates have intercepted your ship! They demand a 20 Credit toll.", 0.04)
