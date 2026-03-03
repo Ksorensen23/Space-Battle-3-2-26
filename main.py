@@ -3,15 +3,15 @@ import sys
 
 alive == True
   while True:     
-    def typewriter(str, time):
+    def typewriter(str, sec):
       for char in str
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(time)
+        time.sleep(sec)
 
-    def textCleanUp(input):
-      if input.isdigit():
+    def textCleanUp(inp):
+      if inp.isdigit():
         retVal = "error no answer selected"
       else:
-        retVal = input.upper()
+        retVal = inp.upper()
       return retVal
