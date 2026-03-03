@@ -1,4 +1,5 @@
 import json;
+gameRun = True;
 
 player = {
     "name": "Ace",
@@ -21,22 +22,27 @@ def save_game():
         file.write(data);
     
     with open("player_save.json", "w") as file:                                             #Writes data to a .json file that the game looks for on start
-        file.write(data);
+        file.write(json.dumps(data, indent=4));
 
     print("\nProgress saved!  Current top score:", player["name"], player["credits"]);
     print("\nYour stats can be found in the 'leaderboard.txt' file\n");
 
 #>=========================
 
-playerChoice = input("Do you want to (T)rade, (F)ly, or (Q)uit? ");
+while(gameRun == True):
+    playerChoice = input("\nDo you want to (T)rade, (F)ly, or (Q)uit? ");
 
-if(playerChoice.upper() == "Q"):
+    if(playerChoice.upper() == "Q"):
+        playerChoice = input("\nWould you like to save your game? (Y/N) ");
 
-    playerChoice = input("Would you like to save your game? (Y/N) ");
+        if(playerChoice.upper() == "Y"):
+            save_game();
 
-    if(playerChoice.upper() == "Y"):
+        elif(playerChoice.upper() == "N"):
+            print("\nClosing game...");
+            gameRun = False;
 
-        save_game();
+        
 
 
 
