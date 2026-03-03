@@ -1,6 +1,17 @@
  import time
 import sys
 
+Max_Weight = 50
+
+CurrentWEIGHT = 0
+IronWEIGHT = 10
+FuelWEIGHT = 5
+TacosWEIGHT = 1
+credits = 300
+Iron = 10
+Tacos = 1
+Fuel = 50
+
 alive == True
   while True:     
     def typewriter(str, time):
@@ -47,16 +58,6 @@ def save_game():
 
 #>=========================
 # Keagan's code
-Max_Weight = 50
-
-CurrentWEIGHT = 0
-IronWEIGHT = 10
-FuelWEIGHT = 5
-TacosWEIGHT = 1
-credits = 300
-Iron = 10
-Tacos = 1
-Fuel = 50
 
  # Add wherever you would buy items to check if your weight is too high
 def check_cargo(__name__):
