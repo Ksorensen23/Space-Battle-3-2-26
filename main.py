@@ -200,15 +200,15 @@ def travel_event(player): # random event function
 
 '''
 while(gameRun == True):
-    playerChoice = input("\nDo you want to (T)rade, (F)ly, or (Q)uit? ");
+    playerChoice = textCleanUp(input("\nDo you want to (T)rade, (F)ly, or (Q)uit? "));
 
-    if(playerChoice.upper() == "Q"):
-        playerChoice = input("\nWould you like to save your game? (Y/N) ");       <==== This probably needs to be adjusted ?
+    if(playerChoice == "Q"):
+        playerChoice = textCleanUp(input("\nWould you like to save your game? (Y/N) "));       <==== This probably needs to be adjusted ?
 
-        if(playerChoice.upper() == "Y"):
+        if(playerChoice == "Y"):
             save_game();
 
-        elif(playerChoice.upper() == "N"):
+        elif(playerChoice == "N"):
             print("\nClosing game...");
             gameRun = False;
 
