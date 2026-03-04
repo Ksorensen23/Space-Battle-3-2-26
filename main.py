@@ -75,36 +75,39 @@ def save_game():
 # Keagan's code
 
  # Add wherever you would buy items to check if your weight is too high
-def check_cargo(__name__):
-    global Max_Weight #<-----------------------------------------------------------------------------come on man, you literally used the word global
-    CargoCheck = Iron + Tacos + Fuel
+def check_carg(player):
     
-    if CargoCheck >= Max_Weight:
+    IronWEIGHT = 10   
+    FuelWEIGHT = 5   
+    TacosWEIGHT = 1   
+    
+    CargoCheck = (IronWEIGHT * player["inventory"]["Iron"]) + (TacosWEIGHT * player["inventory"]["Tacos"])  + (FuelWEIGHT * player["inventory"]["Fuel"])
+    
+    if CargoCheck >= player["max_weight"]:
         print("Cannot buy, over weight capacity!")
         print("Go to a shipyard to increase.")
-    if CargoCheck < Max_Weight:
+    if CargoCheck < player["max_weight"]:
         print("continuing...")
         
 def Shipyard():
-    global Max_Weight #<--------------------------------------------------------------------------- why
-    global credits
+    
     print("===================================================")
     print("| Welcome to the shipyard!                        |")
     print("|                                                 |")
     print("| Upgrade Cost: 200 Credits                       |")
     print("|  [Increases Max Weight by 50]                   |")
     print("|                                                 |")
-    print("| Current Weight: " + str(Max_Weight) + "                              |")
-    print("| Your Balance: " + str(credits) + "                               |")
+    print("| Current Weight: " + str(player["max_weight"]) + "                              |")
+    print("| Your Balance: " + str(player["credits"]) + "                               |")
     print("|                                                 |")
     input1 = input("| Would you like to upgrade you're ship (Y/N)?    |\n")
-    
+
     if input1 == "Y":
-        if credits >= 200:
-            Max_Weight = Max_Weight + 50
-            credits = credits - 200
-            print("Upgrade Successful! Max Weight is now: " + str(Max_Weight))
-            print("200 Credits deducted! Total Credits are now: " + str(credits))
+        if player["credits"] >= 200:
+            player["max_weight"] = player["max_weight"] + 50
+            player["credits"] = player["credits"] - 200
+            print("Upgrade Successful! Max Weight is now: " + str(player["max_weight"]))
+            print("200 Credits deducted! Total Credits are now: " + str(player["credits"]))
             StatsBoard()
         else:
              print("Error, Not enough Money!")
@@ -116,24 +119,16 @@ def Shipyard():
 
 
 def StatsBoard():
-    array1 = []
-    PlayerLife = "Alive" #<--------------------------------------------------------------------------- these are already defined in the dictionary, why do it again?
-    name = input("What is you're name?")
-    credits = 100
-    location = "temp"
-    fuel = 50
-    
-    
     print("*******************************************************")
     print("* Player Statistics.                                  *")
     print("*                                                     *")
-    print("*     Name:" + " " +  name + "                                         *")
-    print("*     Credits:" + " " + str(credits) + "                                    *")
-    print("*     Locations:" + " " + location + "                                 *")
-    print("*     Fuel(gal):" + " " + str(fuel) + "                                   *")
-    print("*     Max Weight(lb):" + " " + str(Max_Weight) + "                              *")
-    print("*     Inventory:" + " " + str(array1) + "            *")
-    print("*     Alive:" + " " + PlayerLife + "                                    *")
+    print("*     Name:" + " " +  player["name"] + "                                         *")
+    print("*     Credits:" + " " + str(player["credits"]) + "                                    *")
+    print("*     Locations:" + " " + player["location"] + "                                 *")
+    print("*     Fuel(gal):" + " " + str(player["fuel"]) + "                                   *")
+    print("*     Max Weight(lb):" + " " + str(player["max_weight"]) + "                              *")
+    print("*     Inventory:" + " " + player["inventory"] + "            *")
+    print("*     Alive:" + " " + player["alive"] + "                                    *")
     print("*                                                     *")
     print("*******************************************************")
   #=================== 
