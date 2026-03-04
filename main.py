@@ -153,7 +153,7 @@ def travel_event(player): # random event function
     typewriter(Atmodes[random.randint(0, len(Atmodes)-1)], 0.04)
     if random.randint(0, 100) < 20: # 20% chance of happening
         typewriter("\n!!! ALERT: UNKNOWN VESSEL SPOTTED !!! Space Pirates have intercepted your ship! They demand a 20 Credit toll.", 0.04)
-        playerChoice = textCleanUp(input("\nDo you (F)ight, (B)ribe, or (R)un? Print player(P)")) # input for how they should act against the pirates
+        playerChoice = textCleanUp(input("\nDo you (F)ight, (B)ribe, or (R)un?)) # input for how they should act against the pirates
         if playerChoice == "F": # they choose to fight
             if random.randint(0, 100) < 30: # 30% chance of losing
                 creditLoss = random.randint(20, 35) # how many credits they should lose
