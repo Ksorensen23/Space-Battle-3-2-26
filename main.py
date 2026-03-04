@@ -193,18 +193,20 @@ def travel_event(player): # random event function
 
 
 
-'''
-while(gameRun == True):
+hile(player["alive"] == True):
     playerChoice = textCleanUp(input("\nDo you want to (T)rade, (F)ly, or (Q)uit? "));
 
-    if(playerChoice == "Q"):
-        playerChoice = textCleanUp(input("\nWould you like to save your game? (Y/N) "));       <==== This probably needs to be adjusted ?
+    if(playerChoice == "T"):
+        typewriter("test", 0.04);
+
+    elif(playerChoice == "Q"):
+        playerChoice = textCleanUp(input("\nWould you like to save your game? (Y/N) "));
 
         if(playerChoice == "Y"):
             save_game();
+            break;
+
 
         elif(playerChoice == "N"):
-            print("\nClosing game...");
-            gameRun = False;
-
-'''
+            typewriter("\nClosing game...", 0.04);
+            break;
