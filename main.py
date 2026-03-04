@@ -3,6 +3,16 @@ import sys
 import random
 import json
 
+player = {                         # <----------------------- --------------- is the dictionary supposed to be placed randomly in this?
+    "name": "Ace",
+    "credits": 100,
+    "location": "Earth",
+    "fuel": 50,
+    "max_weight": 100,
+    "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
+    "alive": True
+    }
+
 #Start of filechecker
 
 filePath = "player_save.json";
@@ -11,16 +21,6 @@ try:
     with open(filePath, "r") as file:
         data = json.load(file);
     print("json file found and successfully loaded.");
-
-    player = {                         # <----------------------- --------------- is the dictionary supposed to be placed randomly in this?
-    "name": "Ace",
-    "credits": 100,                    # < unless I did this incorrectly I actually need to move this to the filenotfounderror so that it defines the player when it can't get the player stats
-    "location": "Earth",
-    "fuel": 50,
-    "max_weight": 100,
-    "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
-    "alive": True
-    }
 
 except FileNotFoundError:
     print("No file named", filePath, "was found.");
