@@ -12,7 +12,7 @@ try:
         data = json.load(file);
     print("json file found and successfully loaded.");
 
-    player = {
+    player = {                         # <----------------------- --------------- is the dictionary supposed to be placed randomly in this?
     "name": "Ace",
     "credits": 100,
     "location": "Earth",
@@ -32,15 +32,15 @@ except json.JSONDecodeError:
 #>End of filechecker=====================
 
 
-Max_Weight = 50
+Max_Weight = 50   #<------------------ --------------------------------------not allowed
 
-CurrentWEIGHT = 0
-IronWEIGHT = 10
-FuelWEIGHT = 5
-TacosWEIGHT = 1
+CurrentWEIGHT = 0 #<------------------------------------------------------------ also not allowed
+IronWEIGHT = 10   #<- this one to
+FuelWEIGHT = 5    #<- and this one
+TacosWEIGHT = 1   #<- final one
 
 alive == True
-  while True:     
+  while True:     #<---------------------------------------------------------------------why are these functions only defined while they are alive?
     def typewriter(str, sec):
       for char in str
         sys.stdout.write(char)
@@ -54,10 +54,8 @@ alive == True
         retVal = inp.upper()
       return retVal
 #>Asher's code===============================================
-import json;
-gameRun = True;
 
-player = {
+player = {  #<----------------------------------------------------------------------------------------------- why is this here?
     "name": "Ace",
     "credits": 100,
     "location": "Earth",
@@ -88,7 +86,7 @@ def save_game():
 
  # Add wherever you would buy items to check if your weight is too high
 def check_cargo(__name__):
-    global Max_Weight
+    global Max_Weight #<-----------------------------------------------------------------------------come on man, you literally used the word global
     CargoCheck = Iron + Tacos + Fuel
     
     if CargoCheck >= Max_Weight:
@@ -98,7 +96,7 @@ def check_cargo(__name__):
         print("continuing...")
         
 def Shipyard():
-    global Max_Weight
+    global Max_Weight #<--------------------------------------------------------------------------- why
     global credits
     print("===================================================")
     print("| Welcome to the shipyard!                        |")
@@ -129,7 +127,7 @@ def Shipyard():
 
 def StatsBoard():
     array1 = []
-    PlayerLife = "Alive"
+    PlayerLife = "Alive" #<--------------------------------------------------------------------------- these are already defined in the dictionary, why do it again?
     name = input("What is you're name?")
     credits = 100
     location = "temp"
@@ -149,7 +147,9 @@ def StatsBoard():
     print("*                                                     *")
     print("*******************************************************")
   #=================== 
-  # Liam's code
+
+  #>Liam - The Encounter Specialist (Event Designer)=================================
+
 def travel_event(player): # random event function
     Atmodes = ["You fly past a dying star...", "You pass by an abandoned satellite.", 
                "A comet goes by as you travel.", 
@@ -203,7 +203,8 @@ def travel_event(player): # random event function
                 typewriter(f"Rolling engines... Failure. You attempt to outrun the pirates but they catch up. You waste {fuelLoss} fuel and lose {creditLoss} credits.", 0.04)
                 player["fuel"] -= fuelLoss #deduct lost fuel
                 player["credits"] -= creditLoss #deduct lost credits
-              
+                
+#>===============================================================================
 
 
 
