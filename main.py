@@ -14,7 +14,7 @@ try:
 
     player = {                         # <----------------------- --------------- is the dictionary supposed to be placed randomly in this?
     "name": "Ace",
-    "credits": 100,
+    "credits": 100,                    # < unless I did this incorrectly I actually need to move this to the filenotfounderror so that it defines the player when it can't get the player stats
     "location": "Earth",
     "fuel": 50,
     "max_weight": 100,
