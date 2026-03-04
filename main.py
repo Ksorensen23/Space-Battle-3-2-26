@@ -3,7 +3,7 @@ import sys
 import random
 import json
 
-player = {                         # <----------------------- --------------- is the dictionary supposed to be placed randomly in this?
+player = {                         
     "name": "Ace",
     "credits": 100,
     "location": "Earth",
@@ -39,31 +39,21 @@ IronWEIGHT = 10   #<- this one to
 FuelWEIGHT = 5    #<- and this one
 TacosWEIGHT = 1   #<- final one
 
-alive == True
-  while True:     #<---------------------------------------------------------------------why are these functions only defined while they are alive?
-    def typewriter(str, sec):
-      for char in str
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(sec)
+def typewriter(str, sec):
+  for char in str
+    sys.stdout.write(char)
+    sys.stdout.flush()
+    time.sleep(sec)
 
-    def textCleanUp(inp):
-      if inp.isdigit():
-        retVal = "error no answer selected"
-      else:
-        retVal = inp.upper()
-      return retVal
+def textCleanUp(inp):
+  if inp.isdigit():
+    retVal = "error no answer selected"
+  else:
+    retVal = inp.upper()
+  return retVal
 #>Asher's code===============================================
 
-player = {  #<----------------------------------------------------------------------------------------------- why is this here?
-    "name": "Ace",
-    "credits": 100,
-    "location": "Earth",
-    "fuel": 50,
-    "max_weight": 100,
-    "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
-    "alive": True
-}
+
 
 #>=========================
 
