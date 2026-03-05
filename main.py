@@ -316,7 +316,7 @@ def GameLoop(player):
            planetShop(player["location"])
 
         if playerChoice == "F":
-            playerChoice = textCleanUp(input("\nDo you want go to the (S)hipyard, planet 1, planet 2"));
+            playerChoice = textCleanUp(input("\nDo you want go to the (S)hipyard, (E)arth, or (M)ars"));
 
 
 
