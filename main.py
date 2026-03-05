@@ -105,83 +105,72 @@ def StatsBoard():
 
 # =========================
 
-def travel_event(player):
-
-    events = [
-        "You fly past a dying star...",
-        "You pass an abandoned satellite.",
-        "A comet streaks past your ship.",
-        "You see a binary star system.",
-        "Another trader greets you in passing."
-    ]
-
-    typewriter(random.choice(events), 0.03)
-
-    if random.randint(0,100) < 20:
-
-        typewriter("!!! PIRATES ATTACK !!! They demand 20 credits.",0.03)
-
+def travel_event(player): # random event function
+    Atmodes = ["You fly past a dying star...", "You pass by an abandoned satellite.", 
+               "A comet goes by as you travel.", 
+               "You pass through a solar system with two stars orbiting each other.", 
+               "Another trader ship passes by, sharing their greetings.", 
+               "A space whale floats close and looks at you curiously before floating away.", 
+               "You witness a black hole feeding on a red giant as you travel.", 
+               "You exit warp travel to refill your water on an ocean planet before continuing to your destination.", 
+               "You narrowly miss a star eater's tail when you pass close by.", 
+               "A ship called 'The Hamilton' offers to update your ships firmware before continuing on."] # the flavour text for traveling
+    typewriter(Atmodes[random.randint(0, len(Atmodes)-1)], 0.04)
+    if random.randint(0, 100) < 20: # 20% chance of happening
+        typewriter("\n!!! ALERT: UNKNOWN VESSEL SPOTTED !!! Space Pirates have intercepted your ship! They demand a 20 Credit toll.", 0.04)
         while True:
-
-            choice = textCleanUp(input("(F)ight (B)ribe (R)un: "))
-
-            if choice == "F":
-
-                if random.randint(0,100) < 30:
-                    loss = random.randint(20,35)
-                    player["credits"] -= loss
-                    print("You lost the fight. Lost",loss,"credits")
-                else:
-                    print("You defeated the pirates!")
-
-                break
-
-            elif choice == "B":
-
-                amount = input("Bribe amount: ")
-
-                if amount.isdigit():
-
-                    amount = int(amount)
-
-                    if amount <= player["credits"]:
-
-                        if random.randint(0,20) < amount:
-                            print("Pirates accept bribe.")
-                            player["credits"] -= amount
-                        else:
-                            print("Pirates reject bribe and take 20 credits.")
-                            player["credits"] -= 20
-
-                        break
-
-            elif choice == "R":
-
-                if player["fuel"] <= 10:
-                    print("Not enough fuel to run!")
+            playerChoice = textCleanUp(input("\nDo you (F)ight, (B)ribe, or (R)un?)) # input for how they should act against the pirates
+            if playerChoice == "F": # they choose to fight
+                if random.randint(0, 100) < 30: # 30% chance of losing
+                    creditLoss = random.randint(20, 35) # how many credits they should lose
+                    typewriter(f"You attempt to defeat the pirates, but unfortunately are beaten down. You lose {creditLoss} credits", 0.04)
+                    player["credits"] -= creditLoss # removes the lost credits from player inventory
                     break
-
-                if random.randint(0,player["fuel"]) > 10:
-
-                    fuelLoss = random.randint(3,10)
-                    player["fuel"] -= fuelLoss
-
-                    print("You escaped! Lost",fuelLoss,"fuel")
-
-                else:
-
-                    fuelLoss = random.randint(2,6)
-                    creditLoss = random.randint(22,30)
-
-                    fuelLoss = min(fuelLoss, player["fuel"])
-                    creditLoss = min(creditLoss, player["credits"])
-
-                    player["fuel"] -= fuelLoss
-                    player["credits"] -= creditLoss
-
-                    print("Failed escape! Lost",fuelLoss,"fuel and",creditLoss,"credits")
-
+                else: # 70% chance of winning
+                    typewriter("You successfully fend off the Pirates! You continue on your way.", 0.04)
+                    break
+            elif playerChoice == "B": # they choose to bribe them
+                while True: # runs the amount they wish to bribe with until they get a valid input
+                    creditBribe = input("How many credits do you attempt to bribe the pirates with?") # they bribe
+                    if creditBribe.isdigit(): # makes sure the bribe is a number
+                        creditBribeInt = int(creditBribe) # turns it from str to int
+                        if 0 <= creditBribeInt <= player["credits"]: # do they have enough money?
+                            if random.randint(0, 20) < creditBribeInt: # this makes it so the higher the bribe, the chance of succeeding is higher
+                                typewriter(f"The pirates accept your bribe and fly away. You lose {creditBribeInt} credits.", 0.04)
+                                player["credits"] -= creditBribeInt # remove the bribe amount from inventory
+                            else: #the check fails 
+                                typewriter("The pirates don't accept your bribe and take 20 credits", 0.04)
+                                player["credits"] -= 20 # deduct 20 credits for toll
+                            break # stops the loop because they did everything right and the check was made. 
+                                    # If we instead break after confirming the bribe is a valid answer, it would skip 
+                                    # over the logic desiding if they convince the pirates and ho much money they lose
+                        elif creditBribeInt > player["credits"]: # is the bribe invalid because they don't have enough money?
+                            print("You don't have that much money!")
+                        else: # number can only be non positive now
+                            print("You need to put a positive number.")
+                    else: # answer wasn't a number
+                        print("It needs to be a number!")
                 break
+            elif playerChoice == "R": # they choose to run
+                if player["fuel"] <= 10:
+                    typewriter("You Don't have enough  fuel!")
+                    
+                elif random.randint(0, player["fuel"]) > 10: # the higher their fuel, the greater change of succeeding
+                    fuelLoss = random.randint(3, 10) # they lose this much fuel for running
+                    typewriter(f"Rolling engines... Success! You boosted past them, but used {fuelLoss} extra Fuel.", 0.04)
+                    player["fuel"] -= fuelLoss # deduct the fuel from inventory
+                    break
+                else: # they lose the check for running
+                    fuelLoss = random.randint(2, 6) # how much fuel they waste
+                    if player["fuel"] < fuelLoss:
+                        fuelLoss = player["fuel"]
+                    creditLoss = random.randint(22, 30) # how much money they lose
+                    if player["credits"] < fuelLoss:
+                        creditLoss = player["credits"]
+                    typewriter(f"Rolling engines... Failure. You attempt to outrun the pirates but they catch up. You waste {fuelLoss} fuel and lose {creditLoss} credits.", 0.04)
+                    player["fuel"] -= fuelLoss #deduct lost fuel
+                    player["credits"] -= creditLoss #deduct lost credits
+                    break
 
 # =========================
 # Market system
