@@ -2,12 +2,8 @@ import time
 import sys
 import random
 import json
-import os
 
-filePath = "player_save.json"
-
-# Default player
-player = {
+player = {                         
     "name": "Ace",
     "credits": 100,
     "location": "Earth",
@@ -15,95 +11,169 @@ player = {
     "max_weight": 100,
     "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
     "alive": True
-}
+    }
 
-# Load save if it exists
+BASE_PRICES = {
+    "Earth": {
+        "Fuel": 10,
+        "Tacos": 5,
+        "Iron": 20
+    },
+    "Mars": {
+        "Fuel": 15,
+        "Tacos": 12,
+        "Iron": 5
+    }
+}
+        
+demand_modifier = {
+    "Fuel": 1.0,
+    "Tacos": 1.0,
+    "Iron": 1.0
+}
+#Start of filechecker
+'''
+DEPRECIATED
+filePath = "player_save.json";
+
 try:
     with open(filePath, "r") as file:
-        player = json.load(file)
-    print("Save file loaded.")
+        data = json.load(file);
+    print("json file found and successfully loaded.");
+
 except FileNotFoundError:
-    print("No save file found. Starting new game.")
+    print("No file named", filePath, "was found.");
+
 except json.JSONDecodeError:
-    print("Save file corrupted. Starting fresh.")
+    print("Error, failed to decode json from the file.");
+DEPRECIATED
+'''
+def load_game():
+    file_path = "player_save.json";
 
-# =========================
+    print("Any other input will start a new game");
+    temp = input("Press x to open your previous save. ");    #< this will open from the player_save.json
 
-def typewriter(text, sec):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(sec)
-    print()
+    if(temp.upper() == "X"):
 
-def textCleanUp(inp):
-    if inp.isdigit():
-        return "error"
-    return inp.upper()
+        with open(file_path, "r") as file:
+            player = json.load(file);
 
-# =========================
+        print(player);
+
+
 
 def save_game():
-    print("\nSaving your progress...\n")
+    file_path = "player_save.json"
+    data = player;
 
-    with open("leaderboard.txt", "w") as file:
-        file.write(str(player))
+    nameChange = input("what is your name? ");
+    player["name"] = nameChange;
 
-    with open("player_save.json", "w") as file:
-        json.dump(player, file, indent=4)
+    temp = input("Press s to save your game. ");
 
-    print("Game Saved!")
+    if(temp.upper() == "S"):
+        with open(file_path, "w") as file:
+            file.write(json.dumps(data, indent=4));
+    
+        print("Game has been saved to:", file_path);
+#>End of filechecker=====================
 
-# =========================
+def typewriter(str, sec):
+  for char in str
+    sys.stdout.write(char)
+    sys.stdout.flush()
+    time.sleep(sec)
 
-def check_cargo(player):
-    IronWEIGHT = 10
-    FuelWEIGHT = 5
-    TacosWEIGHT = 1
+def textCleanUp(inp):
+  if inp.isdigit():
+    retVal = "error no answer selected"
+  else:
+    retVal = inp.upper()
+  return retVal
+#>Asher's code===============================================
 
-    CargoCheck = (
-        IronWEIGHT * player["inventory"]["Iron"] +
-        TacosWEIGHT * player["inventory"]["Tacos"] +
-        FuelWEIGHT * player["inventory"]["Fuel"]
-    )
 
+
+#>=========================
+'''
+def save_game(player):
+    print("\nSaving your progress to the star-map...\n\n...");
+        
+    data = str(player);                                                                     #Turns the "credits" value in player into a string to be written to the text file
+
+    with open("leaderboard.txt", "w") as file:                                              #Writes data to a .txt file for the player to look at
+        file.write(data);
+    
+    with open("player_save.json", "w") as file:                                             #Writes data to a .json file that the game looks for on start
+        file.write(json.dumps(data, indent=4));
+
+    print("\nProgress saved!  Current top score:", player["name"], player["credits"]);
+    print("\nYour stats can be found in the 'leaderboard.txt' file\n");
+'''
+#>=========================
+# Keagan's code
+
+ # Add wherever you would buy items to check if your weight is too high
+def check_carg(player):
+    
+    IronWEIGHT = 10   
+    FuelWEIGHT = 5   
+    TacosWEIGHT = 1   
+    
+    CargoCheck = (IronWEIGHT * player["inventory"]["Iron"]) + (TacosWEIGHT * player["inventory"]["Tacos"])  + (FuelWEIGHT * player["inventory"]["Fuel"])
+    
     if CargoCheck >= player["max_weight"]:
         print("Cannot buy, over weight capacity!")
-        return False
+        print("Go to a shipyard to increase.")
+    if CargoCheck < player["max_weight"]:
+        print("continuing...")
+        
+def Shipyard(player):
+    
+    print("===================================================")
+    print("| Welcome to the shipyard!                        |")
+    print("|                                                 |")
+    print("| Upgrade Cost: 200 Credits                       |")
+    print("|  [Increases Max Weight by 50]                   |")
+    print("|                                                 |")
+    print("| Current Weight: " + str(player["max_weight"]) + "                              |")
+    print("| Your Balance: " + str(player["credits"]) + "                               |")
+    print("|                                                 |")
+    input1 = input("| Would you like to upgrade you're ship (Y/N)?    |\n")
 
-    return True
-
-# =========================
-
-def Shipyard():
-    print("========== Shipyard ==========")
-    print("Upgrade Cost: 200 Credits")
-    print("Current Max Weight:", player["max_weight"])
-    print("Your Credits:", player["credits"])
-
-    choice = textCleanUp(input("Upgrade ship? (Y/N): "))
-
-    if choice == "Y":
+    if input1 == "Y":
         if player["credits"] >= 200:
-            player["max_weight"] += 50
-            player["credits"] -= 200
-            print("Upgrade successful!")
+            player["max_weight"] = player["max_weight"] + 50
+            player["credits"] = player["credits"] - 200
+            print("Upgrade Successful! Max Weight is now: " + str(player["max_weight"]))
+            print("200 Credits deducted! Total Credits are now: " + str(player["credits"]))
+            StatsBoard()
         else:
-            print("Not enough credits.")
+             print("Error, Not enough Money!")
+             print("Now Exiting...")
+             StatsBoard()
+    if input1 == "N":
+        print("Exiting...")
+        StatsBoard()
 
-# =========================
 
-def StatsBoard():
-    print("\n===== PLAYER STATS =====")
-    print("Name:", player["name"])
-    print("Credits:", player["credits"])
-    print("Location:", player["location"])
-    print("Fuel:", player["fuel"])
-    print("Max Weight:", player["max_weight"])
-    print("Inventory:", player["inventory"])
-    print("========================")
+def StatsBoard(player):
+    print("*******************************************************")
+    print("* Player Statistics.                                  *")
+    print("*                                                     *")
+    print("*     Name:" + " " +  player["name"] + "                                         *")
+    print("*     Credits:" + " " + str(player["credits"]) + "                                    *")
+    print("*     Locations:" + " " + player["location"] + "                                 *")
+    print("*     Fuel(gal):" + " " + str(player["fuel"]) + "                                   *")
+    print("*     Max Weight(lb):" + " " + str(player["max_weight"]) + "                              *")
+    print("*     Inventory:" + " " + player["inventory"] + "            *")
+    print("*     Alive:" + " " + player["alive"] + "                                    *")
+    print("*                                                     *")
+    print("*******************************************************")
+  #=================== 
 
-# =========================
+  #>Liam - The Encounter Specialist (Event Designer)=================================
 
 def travel_event(player): # random event function
     Atmodes = ["You fly past a dying star...", "You pass by an abandoned satellite.", 
@@ -171,178 +241,96 @@ def travel_event(player): # random event function
                     player["fuel"] -= fuelLoss #deduct lost fuel
                     player["credits"] -= creditLoss #deduct lost credits
                     break
+                
+#>===============================================================================
 
-# =========================
-# Market system
-
-BASE_PRICES = {
-
-    "Earth": {
-        "Fuel":10,
-        "Tacos":5,
-        "Iron":20
-    },
-
-    "Mars":{
-        "Fuel":15,
-        "Tacos":12,
-        "Iron":5
-    }
-
-}
-
-demand_modifier = {
-    "Fuel":1.0,
-    "Tacos":1.0,
-    "Iron":1.0
-}
 
 def get_prices(planet):
-
     prices = {}
-
-    print("\n===== MARKET PRICES =====")
-
     for item, base_price in BASE_PRICES[planet].items():
-
-        price = base_price * demand_modifier[item]
-        prices[item] = round(price, 2)
-
-        print(item + ":", prices[item], "credits")
-
-    print("=========================\n")
+        modified_price = base_price * demand_modifier[item]
+        prices[item] = round(modified_price, 2)
 
     return prices
 
-def increase_demand(item):
 
+def increase_demand(item):
     if item in demand_modifier:
         demand_modifier[item] *= 1.05
 
-# =========================
-
-def buy_item(player,item,price,quantity):
-
-    if not check_cargo(player):
-        return False
-
-    total = price * quantity
-
-    if player["credits"] < total:
-        print("Not enough credits.")
+def buy_item(player, item, price, quantity):
+    
+    total_cost = price * quantity
+    
+    if player["credits"] < total_cost:
+        print(">>> Not enough credits for this purchase.")
         return False
 
     player["inventory"][item] += quantity
-    player["credits"] -= total
-
+    
+    player["credits"] -= total_cost
+    
     for _ in range(quantity):
         increase_demand(item)
 
-    print("Purchased",quantity,item)
-
+    print(f"Purchase Complete: Spent {total_cost} Credits.")
     return True
 
-def sell_item(player,item,price,quantity):
-
-    if player["inventory"][item] < quantity:
-        print("Not enough items.")
+def sell_item(player, item, price, quantity=1):
+    if item not in player["inventory"]:
+        print(">>> Item does not exist.")
         return False
 
-    total = price * quantity
+    if player["inventory"][item] < quantity:
+        print("You do not have enough of that item to sell.")
+        return False
+
+    total_value = price * quantity
 
     player["inventory"][item] -= quantity
-    player["credits"] += total
 
-    print("Sold",quantity,item)
+    player["credits"] += total_value
+
+    print(f" Sold {quantity} {item} for {total_value} Credits.")
 
     return True
 
-# =========================
+def planetShop(player, planet):
+    get_prices(planet)
+    
+#>====================================================================
 
-def GameLoop():
+def GameLoop(player): 
+    while(player["alive"] == True):
+        playerChoice = textCleanUp(input("\nDo you want to (T)rade, (F)ly, or (Q)uit? "));
 
-    while player["alive"]:
+        if(playerChoice == "Q"):
+            playerChoice = textCleanUp(input("\nWould you like to (S)ave your game? "));
+    
+            if(playerChoice == "Y"):
+                save_game();
+            typewriter("\nClosing game...", 0.04);
+            break;
+                
+        if(playerChoice == "T"):
+            playerChoice = textCleanUp(input("Would you like to go to  ))
 
-        choice = textCleanUp(input("\n(T)rade (F)ly (S)tats (Q)uit: "))
+        if playerChoice == "F":
+            playerChoice = textCleanUp(input("\nDo you want go to the (S)hipyard, planet 1, planet 2"));
 
-        if choice == "T":
-            prices = get_prices(player["location"])
 
-            while True:
 
-                trade = textCleanUp(input("(B)uy (S)ell (E)xit market: "))
-
-                if trade == "B":
-
-                    item = textCleanUp(input("Item to buy (Fuel/Tacos/Iron): "))
-
-                    if item not in prices:
-                        print("Item not sold here.")
-                        continue
-
-                    qty = input("Quantity: ")
-
-                    if qty.isdigit():
-                        qty = int(qty)
-                        buy_item(player, item, prices[item], qty)
-
-                elif trade == "S":
-
-                    item = textCleanUp(input("Item to sell (Fuel/Tacos/Iron): "))
-
-                    if item not in prices:
-                        print("Item not traded here.")
-                        continue
-
-                    qty = input("Quantity: ")
-
-                    if qty.isdigit():
-                        qty = int(qty)
-                        sell_item(player, item, prices[item], qty)
-
-                elif trade == "E":
-                    break
-
-        elif choice == "F":
-
-            travel_event(player)
-
-        elif choice == "S":
-
-            StatsBoard()
-
-        elif choice == "Q":
-
-            save = textCleanUp(input("Save game? (Y/N): "))
-
-            if save == "Y":
-                save_game()
-
-            break
-
-# =========================
-# Main menu
 
 while True:
-
-    playPrompt = textCleanUp(input(f"\n(P)lay (D)elete Save (Q)uit: "))
-
+    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player["name"]}, (D)elete {player["name"]}, or (Q)uit?"))
+    
     if playPrompt == "P":
         GameLoop()
 
-    elif playPrompt == "D":
-
-        confirm = textCleanUp(input("Press X to delete save: "))
-
+    if playPrompt == "D":
+        confirm = textCleanUp(input("Are you Sure? Press (X) to continue with deletion. Press anything else to go back."))
         if confirm == "X":
-
-            if os.path.exists(filePath):
-                os.remove(filePath)
-                print("Save deleted.")
-            else:
-                print("No save file found.")
-
-    elif playPrompt == "Q":
-
-        typewriter("Leaving Game...",0.03)
+            save_game(wipe)
+    if playPrompt == "Q":
+        typewriter("Leaving Game............", 0.04)
         break
