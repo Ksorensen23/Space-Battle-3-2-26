@@ -43,8 +43,6 @@ def save_game(argument):
     nameChange = input("what is your name? ");
     player["name"] = nameChange;
 
-    temp = input("Press s to save your game, or d to wipe your save. ");
-
     if(argument == "save"):
         with open(file_path, "w") as file:
             file.write(json.dumps(player, indent=4));
