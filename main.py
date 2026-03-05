@@ -43,6 +43,8 @@ def save_game(argument):
     nameChange = input("what is your name? ");
     player["name"] = nameChange;
 
+    temp = input("Press s to save your game, or d to wipe your save. ");
+
     if(argument == "save"):
         with open(file_path, "w") as file:
             file.write(json.dumps(player, indent=4));
@@ -266,11 +268,11 @@ def market(player):
 # ==================== Game Loop ====================
 def GameLoop(player):
     while player["alive"]:
-        playerChoice = textCleanUp(input("\nDo you want to (F)ly, (S)hipyard, (T)rade, or (Q)uit? "))
+        playerChoice = textCleanUp(input("\nDo you want to (F)ly, (T)rade, or (Q)uit? "))
 
         if playerChoice == "Q":
             playerChoice = textCleanUp(input("\nWould you like to (S)ave your game? "))
-            if playerChoice == "S":
+            if playerChoice == "Y":
                 save_game("save")
             typewriter("\nClosing game...", 0.04)
             break
@@ -279,11 +281,13 @@ def GameLoop(player):
         elif playerChoice == "T":
             market(player)  # <-- Market is now fully accessible
         elif playerChoice == "F":
-            playerChoice = textCleanUp(input("\nGo to (E)arth or (M)ars? "))
+            playerChoice = textCleanUp(input("\nGo to (S)hipyard,(E)arth or (M)ars? "))
             if playerChoice == "E":
                 player["location"] = "Earth"
             elif playerChoice == "M":
                 player["location"] = "Mars"
+            elif playerChoice == "S":
+                player["location"] = "shipyard"
             travel_event(player)
 
 # ==================== Main ====================
