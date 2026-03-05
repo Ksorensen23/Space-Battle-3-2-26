@@ -290,7 +290,7 @@ def GameLoop(player):
 
 # ==================== Main ====================
 while True:
-    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
+    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? \n"))
 
     if playPrompt == "P":
         GameLoop(player)
