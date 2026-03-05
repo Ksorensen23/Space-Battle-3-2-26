@@ -338,7 +338,7 @@ while True:
     playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player["name"]}, (D)elete {player["name"]}, or (Q)uit?"))
     
     if playPrompt == "P":
-        GameLoop()
+        GameLoop(player)
 
     elif playPrompt == "D":
         confirm = textCleanUp(input("Are you Sure? Press (X) to continue with deletion. Press anything else to go back."))
