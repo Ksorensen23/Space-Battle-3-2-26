@@ -316,11 +316,20 @@ def GameLoop(player):
             typewriter("\nClosing game...", 0.04);
             break;
                 
-        if(playerChoice == "T"):
-           planetShop(player["location"])
+        elif(playerChoice == "T"):
+            if player["location" == "Shipyard":
+                Shipyard(player)
+            else:
+                planetShop(player["location"])
 
-        if playerChoice == "F":
+        elif playerChoice == "F":
             playerChoice = textCleanUp(input("\nDo you want go to the (S)hipyard, (E)arth, or (M)ars"));
+            if playerChoice == "S":
+                player["location"] = "Shipyard"
+            elif playerChoice == "E":
+                player["location"] = "Earth"
+            elif playerChoice == "M":
+                player["location"] = "Mars"
 
 
 
@@ -331,10 +340,10 @@ while True:
     if playPrompt == "P":
         GameLoop()
 
-    if playPrompt == "D":
+    elif playPrompt == "D":
         confirm = textCleanUp(input("Are you Sure? Press (X) to continue with deletion. Press anything else to go back."))
         if confirm == "X":
             save_game(wipe)
-    if playPrompt == "Q":
+    elif playPrompt == "Q":
         typewriter("Leaving Game............", 0.04)
         break
