@@ -70,13 +70,17 @@ def save_game():
     nameChange = input("what is your name? ");
     player["name"] = nameChange;
 
-    temp = input("Press s to save your game. ");
+    temp = input("Press s to save your game, or d to wipe your save. ");
 
     if(temp.upper() == "S"):
         with open(file_path, "w") as file:
             file.write(json.dumps(data, indent=4));
     
         print("Game has been saved to:", file_path);
+
+    elif(temp.upper() == "D"):
+        player = player;
+        print("save has been reverted to default");
 #>End of filechecker=====================
 
 def typewriter(str, sec):
