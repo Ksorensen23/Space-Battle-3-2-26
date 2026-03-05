@@ -13,6 +13,24 @@ player = {
     "alive": True
     }
 
+BASE_PRICES = {
+    "Earth": {
+        "Fuel": 10,
+        "Tacos": 5,
+        "Iron": 20
+    },
+    "Mars": {
+        "Fuel": 15,
+        "Tacos": 12,
+        "Iron": 5
+    }
+}
+        
+demand_modifier = {
+    "Fuel": 1.0,
+    "Tacos": 1.0,
+    "Iron": 1.0
+}
 #Start of filechecker
 
 filePath = "player_save.json";
@@ -49,7 +67,7 @@ def textCleanUp(inp):
 
 #>=========================
 
-def save_game():
+def save_game(player):
     print("\nSaving your progress to the star-map...\n\n...");
         
     data = str(player);                                                                     #Turns the "credits" value in player into a string to be written to the text file
@@ -81,7 +99,7 @@ def check_carg(player):
     if CargoCheck < player["max_weight"]:
         print("continuing...")
         
-def Shipyard():
+def Shipyard(player):
     
     print("===================================================")
     print("| Welcome to the shipyard!                        |")
@@ -110,7 +128,7 @@ def Shipyard():
         StatsBoard()
 
 
-def StatsBoard():
+def StatsBoard(player):
     print("*******************************************************")
     print("* Player Statistics.                                  *")
     print("*                                                     *")
@@ -196,24 +214,6 @@ def travel_event(player): # random event function
                 
 #>===============================================================================
 
-BASE_PRICES = {
-    "Earth": {
-        "Fuel": 10,
-        "Tacos": 5,
-        "Iron": 20
-    },
-    "Mars": {
-        "Fuel": 15,
-        "Tacos": 12,
-        "Iron": 5
-    }
-}
-        
-demand_modifier = {
-    "Fuel": 1.0,
-    "Tacos": 1.0,
-    "Iron": 1.0
-}
 
 def get_prices(planet):
     prices = {}
@@ -264,9 +264,13 @@ def sell_item(player, item, price, quantity=1):
     print(f" Sold {quantity} {item} for {total_value} Credits.")
 
     return True
+
+def planetShop(player, planet):
+    get_prices(planet)
+    
 #>====================================================================
 
-def GameLoop(): 
+def GameLoop(player): 
     while(player["alive"] == True):
         playerChoice = textCleanUp(input("\nDo you want to (T)rade, (F)ly, or (Q)uit? "));
 
@@ -279,7 +283,7 @@ def GameLoop():
             break;
                 
         if(playerChoice == "T"):
-            typewriter("Collin add the trade function", 0.04);
+            playerChoice = textCleanUp(input("Would you like to go to  ))
 
         if playerChoice == "F":
             playerChoice = textCleanUp(input("\nDo you want go to the (S)hipyard, planet 1, planet 2"));
