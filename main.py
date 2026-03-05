@@ -3,6 +3,10 @@ import sys
 import random
 import json
 
+# ==================== Save creation ====================
+
+with open("player_save.json", "w") as file;    # Always create a json file for the player save
+
 player = {                         
     "name": "Ace",
     "credits": 100,
@@ -12,17 +16,6 @@ player = {
     "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
     "alive": True
 }
-
-
-default_player = {                         
-    "name": "Ace",
-    "credits": 100,
-    "location": "Earth",
-    "fuel": 50,
-    "max_weight": 100,
-    "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
-    "alive": True
-    }
 
 # ==================== File Save/Load ====================
 def load_game():
@@ -36,24 +29,20 @@ def load_game():
             player.update(player_data)
         print(player)
 
-def save_game(argument):
+def save_game():
     file_path = "player_save.json"
-    global player
+    name_change = input("What is your name? ")
+    player["name"] = name_change
 
-    nameChange = input("what is your name? ");
-    player["name"] = nameChange;
+    temp = input("Press S to save your game, or D to wipe your save: ")
 
-    temp = input("Press s to save your game, or d to wipe your save. ");
-
-    if(argument == "save"):
+    if temp.upper() == "S":
         with open(file_path, "w") as file:
-            file.write(json.dumps(player, indent=4));
-    
-        print("Game has been saved to:", file_path);
+            file.write(json.dumps(player, indent=4))
+        print("Game has been saved to:", file_path)
+    elif temp.upper() == "D":
+        print("Save has been reverted to default")
 
-    elif(argument == "wipe"):
-        player = default_player;
-        print("save has been reverted to default");
 # ==================== Utility Functions ====================
 def typewriter(text, sec):
     for char in text:
@@ -132,8 +121,7 @@ def travel_event(player):
         "A ship called 'The Hamilton' offers to update your ship's firmware."
     ]
     typewriter(Atmodes[random.randint(0, len(Atmodes)-1)], 0.04)
-    
-    if random.randint(0, 100) < 20:  # 20% chance
+    if random.randint(0, 100) < 20:
         typewriter("\n!!! ALERT: UNKNOWN VESSEL SPOTTED !!! Space Pirates demand a 20 Credit toll.", 0.04)
         while True:
             playerChoice = textCleanUp(input("\nDo you (F)ight, (B)ribe, or (R)un? "))
@@ -177,11 +165,9 @@ def travel_event(player):
                     player["fuel"] -= fuelLoss
                     player["credits"] -= creditLoss
                 break
-    print(f"\n[CURRENT LOCATION] {player["location"]}\n")
 
-# ==================== Market System ====================
+# ==================== Market System with Instant Price Update ====================
 def market(player):
-    # Set planet-specific prices randomly
     prices = {
         "Tacos": random.randint(5, 15),
         "Iron": random.randint(20, 50),
@@ -192,7 +178,8 @@ def market(player):
         print(f"\n=== Welcome to {player['location']} Market ===")
         print(f"Your Credits: {player['credits']}")
         print(f"Inventory: {player['inventory']}")
-        print("Current Prices: ", prices)
+        print("Current Prices: ", {k: round(v,1) for k,v in prices.items()})
+
         choice = textCleanUp(input("Do you want to (B)uy, (S)ell, or (E)xit? "))
 
         if choice == "E":
@@ -234,9 +221,18 @@ def market(player):
                 print("Cannot buy, exceeds cargo capacity!")
                 continue
 
-            player["inventory"][item_name] += amount
+            # Deduct credits and add inventory
             player["credits"] -= total_cost
-            print(f"Bought {amount} {item_name} for {total_cost} credits.")
+            player["inventory"][item_name] += amount
+            print(f"Bought {amount} {item_name} for {total_cost} credits. Remaining Credits: {player['credits']}")
+
+            # Instant price increase (5-10%)
+            increase_percent = random.uniform(0.05, 0.1)
+            prices[item_name] *= (1 + increase_percent)
+            prices[item_name] = round(prices[item_name], 1)
+
+            # Show updated prices immediately
+            print("Updated Prices:", {k: round(v,1) for k,v in prices.items()})
 
         elif choice == "S":
             item = textCleanUp(input("Sell (T)acos, (I)ron, or (F)uel? "))
@@ -260,10 +256,19 @@ def market(player):
                 print("You don't have that many!")
                 continue
 
+            # Add credits and subtract inventory
             total_gain = amount * prices[item_name]
-            player["inventory"][item_name] -= amount
             player["credits"] += total_gain
-            print(f"Sold {amount} {item_name} for {total_gain} credits.")
+            player["inventory"][item_name] -= amount
+            print(f"Sold {amount} {item_name} for {total_gain} credits. New Credits Balance: {player['credits']}")
+
+            # Instant price decrease (2-5%)
+            decrease_percent = random.uniform(0.02, 0.05)
+            prices[item_name] *= (1 - decrease_percent)
+            prices[item_name] = round(prices[item_name], 1)
+
+            # Show updated prices immediately
+            print("Updated Prices:", {k: round(v,1) for k,v in prices.items()})
 
 # ==================== Game Loop ====================
 def GameLoop(player):
@@ -273,34 +278,33 @@ def GameLoop(player):
         if playerChoice == "Q":
             playerChoice = textCleanUp(input("\nWould you like to (S)ave your game? "))
             if playerChoice == "Y":
-                save_game("save")
+                save_game()
             typewriter("\nClosing game...", 0.04)
             break
         elif playerChoice == "S":
             Shipyard(player)
         elif playerChoice == "T":
-            market(player)  # <-- Market is now fully accessible
+            market(player)
         elif playerChoice == "F":
-            playerChoice = textCleanUp(input("\nGo to (S)hipyard,(E)arth or (M)ars? "))
-            if playerChoice == "E":
+            playerChoice = textCleanUp(input("\nGo to (S)hipyard, (E)arth, or (M)ars? "))
+            if playerChoice == "S":
+                player["location"] = "Shipyard"
+            elif playerChoice == "E":
                 player["location"] = "Earth"
             elif playerChoice == "M":
                 player["location"] = "Mars"
-            elif playerChoice == "S":
-                player["location"] = "shipyard"
             travel_event(player)
 
 # ==================== Main ====================
 while True:
-    load_game()
-    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? \n"))
+    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
 
     if playPrompt == "P":
         GameLoop(player)
     elif playPrompt == "D":
         confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
         if confirm == "X":
-            save_game("wipe")  # optional: implement wipe logic here
+            save_game()
     elif playPrompt == "Q":
         typewriter("Leaving Game............", 0.04)
         break
