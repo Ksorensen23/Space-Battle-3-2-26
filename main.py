@@ -269,22 +269,20 @@ def sell_item(player, item, price, quantity=1):
 def GameLoop(): 
     while(player["alive"] == True):
         playerChoice = textCleanUp(input("\nDo you want to (T)rade, (F)ly, or (Q)uit? "));
-    
-        if(playerChoice == "T"):
-            typewriter("test", 0.04);
-    
-        elif(playerChoice == "Q"):
-            playerChoice = textCleanUp(input("\nWould you like to save your game? (Y/N) "));
+
+        if(playerChoice == "Q"):
+            playerChoice = textCleanUp(input("\nWould you like to (S)ave your game? "));
     
             if(playerChoice == "Y"):
                 save_game();
-                break;
-    
-    
-            elif(playerChoice == "N"):
-                typewriter("\nClosing game...", 0.04);
-                break;
+            typewriter("\nClosing game...", 0.04);
+            break;
+                
+        if(playerChoice == "T"):
+            typewriter("Collin add the trade function", 0.04);
 
+        if playerChoice == "F":
+            playerChoice = textCleanUp(input("\nDo you want go to the (S)hipyard, planet 1, planet 2"));
 
 
 
@@ -302,3 +300,4 @@ while True:
     if playPrompt == "Q":
         typewriter("Leaving Game............", 0.04)
         break
+
