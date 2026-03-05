@@ -317,7 +317,7 @@ def GameLoop(player):
             break;
                 
         elif(playerChoice == "T"):
-            if player["location" == "Shipyard":
+            if player["location"] == "Shipyard":
                 Shipyard(player)
             else:
                 planetShop(player["location"])
