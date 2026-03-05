@@ -31,14 +31,6 @@ except json.JSONDecodeError:
 
 #>End of filechecker=====================
 
-
-Max_Weight = 50   #<------------------ --------------------------------------not allowed
-
-CurrentWEIGHT = 0 #<------------------------------------------------------------ also not allowed
-IronWEIGHT = 10   #<- this one to
-FuelWEIGHT = 5    #<- and this one
-TacosWEIGHT = 1   #<- final one
-
 def typewriter(str, sec):
   for char in str
     sys.stdout.write(char)
