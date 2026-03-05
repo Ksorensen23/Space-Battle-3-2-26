@@ -25,20 +25,24 @@ def load_game():
             player.update(player_data)
         print(player)
 
-def save_game():
+def save_game(argument):
     file_path = "player_save.json"
-    name_change = input("What is your name? ")
-    player["name"] = name_change
+    global player
 
-    temp = input("Press S to save your game, or D to wipe your save: ")
+    nameChange = input("what is your name? ");
+    player["name"] = nameChange;
 
-    if temp.upper() == "S":
+    temp = input("Press s to save your game, or d to wipe your save. ");
+
+    if(argument == "save"):
         with open(file_path, "w") as file:
-            file.write(json.dumps(player, indent=4))
-        print("Game has been saved to:", file_path)
-    elif temp.upper() == "D":
-        print("Save has been reverted to default")
+            file.write(json.dumps(player, indent=4));
+    
+        print("Game has been saved to:", file_path);
 
+    elif(argument == "wipe"):
+        player = default_player;
+        print("save has been reverted to default");
 # ==================== Utility Functions ====================
 def typewriter(text, sec):
     for char in text:
@@ -280,7 +284,7 @@ while True:
     elif playPrompt == "D":
         confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
         if confirm == "X":
-            save_game()  # optional: implement wipe logic here
+            save_game("wipe")  # optional: implement wipe logic here
     elif playPrompt == "Q":
         typewriter("Leaving Game............", 0.04)
         break
