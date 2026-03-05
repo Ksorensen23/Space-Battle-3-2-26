@@ -96,7 +96,7 @@ def textCleanUp(inp):
 
 
 #>=========================
-
+'''
 def save_game(player):
     print("\nSaving your progress to the star-map...\n\n...");
         
@@ -110,7 +110,7 @@ def save_game(player):
 
     print("\nProgress saved!  Current top score:", player["name"], player["credits"]);
     print("\nYour stats can be found in the 'leaderboard.txt' file\n");
-
+'''
 #>=========================
 # Keagan's code
 
