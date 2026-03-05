@@ -132,6 +132,7 @@ def travel_event(player):
         "A ship called 'The Hamilton' offers to update your ship's firmware."
     ]
     typewriter(Atmodes[random.randint(0, len(Atmodes)-1)], 0.04)
+    print(f"\n[CURRENT LOCATION] {player["location"]}\n")
     if random.randint(0, 100) < 20:  # 20% chance
         typewriter("\n!!! ALERT: UNKNOWN VESSEL SPOTTED !!! Space Pirates demand a 20 Credit toll.", 0.04)
         while True:
