@@ -32,7 +32,8 @@ demand_modifier = {
     "Iron": 1.0
 }
 #Start of filechecker
-
+'''
+DEPRECIATED
 filePath = "player_save.json";
 
 try:
@@ -45,8 +46,37 @@ except FileNotFoundError:
 
 except json.JSONDecodeError:
     print("Error, failed to decode json from the file.");
+DEPRECIATED
+'''
+def load_game():
+    file_path = "player_save.json";
+
+    print("Any other input will start a new game");
+    temp = input("Press x to open your previous save. ");    #< this will open from the player_save.json
+
+    if(temp.upper() == "X"):
+
+        with open(file_path, "r") as file:
+            player = json.load(file);
+
+        print(player);
 
 
+
+def save_game():
+    file_path = "player_save.json"
+    data = player;
+
+    nameChange = input("what is your name? ");
+    player["name"] = nameChange;
+
+    temp = input("Press s to save your game. ");
+
+    if(temp.upper() == "S"):
+        with open(file_path, "w") as file:
+            file.write(json.dumps(data, indent=4));
+    
+        print("Game has been saved to:", file_path);
 #>End of filechecker=====================
 
 def typewriter(str, sec):
