@@ -25,7 +25,7 @@ def load_game():
         with open(file_path, "r") as file:
             player_data = json.load(file)
             player.update(player_data)
-        print(player)
+        
     except:
         print("previous save not found! loading default.")
         while True:
