@@ -18,14 +18,16 @@ player = {
 }
 
 # ==================== File Save/Load ====================
-def load_game(choice):
+def load_game():
     file_path = "player_save.json"
     
-    if choice == "save": # loads a previous save, otherwise starts a new one.
+    try:
         with open(file_path, "r") as file:
             player_data = json.load(file)
             player.update(player_data)
         print(player)
+    except:
+        print("previous save not found! loading default.")
 
 def save_game(choice):
     file_path = "player_save.json"
@@ -295,11 +297,11 @@ def GameLoop(player):
 
 # ==================== Main ====================
 while True:
-    
+    load_game()
     playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
 
     if playPrompt == "P":
-        load_game("save")
+        
         GameLoop(player)
     elif playPrompt == "D":
         confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
