@@ -57,7 +57,7 @@ def typewriter(text, sec):
 def textCleanUp(inp):
     if inp.isdigit():
         return "ERROR: no answer selected"
-    return inp.upper()
+    return inp.capitalize()
 
 def check_carg(player):
     IronWEIGHT = 10   
