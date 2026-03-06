@@ -307,7 +307,7 @@ def main():
             if confirm == "X":
                 save_game()
         elif playPrompt == "Q":
-            typewriter("Leaving Game............", 0.04)
+            typewriter("Leaving Menu............", 0.04)
             break
 if __name__ == "__main__":
     main()
