@@ -297,6 +297,9 @@ def GameLoop(player):
             elif playerChoice == "M":
                 player["location"] = "Mars"
             travel_event(player)
+    if player["dead"]:
+        typewriter("GAME OVER! Player stats:", 0.04)
+        StatsBoard()
 
 # ==================== Main ====================
 while True:
