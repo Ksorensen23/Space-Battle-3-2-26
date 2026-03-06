@@ -28,6 +28,7 @@ def load_game():
         print(player)
     except:
         print("previous save not found! loading default.")
+        player["name"] = textCleanUp(input("What is your name?"))
 
 def save_game(choice):
     file_path = "player_save.json"
