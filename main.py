@@ -5,7 +5,7 @@ import json
 
 # ==================== Save creation ====================
 
-#with open("player_save.json", "w") as file:    # Always create a json file for the player save
+
 
 player = {                         
     "name": "Ace",
@@ -297,6 +297,7 @@ def GameLoop(player):
 
 # ==================== Main ====================
 while True:
+    load_game()
     playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
 
     if playPrompt == "P":
