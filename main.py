@@ -18,29 +18,27 @@ player = {
 }
 
 # ==================== File Save/Load ====================
-def load_game():
+def load_game(choice):
     file_path = "player_save.json"
-    print("Any other input will start a new game")
-    temp = input("Press x to open your previous save: ")
-
-    if temp.upper() == "X":
+    
+    if choice == "save": # loads a previous save, otherwise starts a new one.
         with open(file_path, "r") as file:
             player_data = json.load(file)
             player.update(player_data)
         print(player)
 
-def save_game():
+def save_game(choice):
     file_path = "player_save.json"
     name_change = input("What is your name? ")
     player["name"] = name_change
 
     temp = input("Press S to save your game, or D to wipe your save: ")
 
-    if temp.upper() == "S":
+    if choice == "save":
         with open(file_path, "w") as file:
             file.write(json.dumps(player, indent=4))
         print("Game has been saved to:", file_path)
-    elif temp.upper() == "D":
+    elif choice == "wipe":
         print("Save has been reverted to default")
 
 # ==================== Utility Functions ====================
@@ -278,7 +276,7 @@ def GameLoop(player):
         if playerChoice == "Q":
             playerChoice = textCleanUp(input("\nWould you like to Save your game? (Y/N)"))
             if playerChoice == "Y":
-                save_game()
+                save_game("save")
             typewriter("\nClosing game...", 0.04)
             break
         elif playerChoice == "S":
@@ -297,15 +295,16 @@ def GameLoop(player):
 
 # ==================== Main ====================
 while True:
-    load_game()
+    
     playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
 
     if playPrompt == "P":
+        load_game("save")
         GameLoop(player)
     elif playPrompt == "D":
         confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
         if confirm == "X":
-            save_game()
+            save_game("wipe")
     elif playPrompt == "Q":
         typewriter("Leaving Game............", 0.04)
         break
