@@ -276,7 +276,7 @@ def GameLoop(player):
         playerChoice = textCleanUp(input("\nDo you want to (F)ly, (T)rade, or (Q)uit? "))
 
         if playerChoice == "Q":
-            playerChoice = textCleanUp(input("\nWould you like to (S)ave your game? "))
+            playerChoice = textCleanUp(input("\nWould you like to Save your game? (Y/N)"))
             if playerChoice == "Y":
                 save_game()
             typewriter("\nClosing game...", 0.04)
