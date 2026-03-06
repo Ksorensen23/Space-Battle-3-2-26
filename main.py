@@ -5,7 +5,7 @@ import json
 
 # ==================== Save creation ====================
 
-
+#with open("player_save.json", "w") as file:    # Always create a json file for the player save
 
 player = {                         
     "name": "Ace",
@@ -20,30 +20,27 @@ player = {
 # ==================== File Save/Load ====================
 def load_game():
     file_path = "player_save.json"
-    
-    try:
+    print("Any other input will start a new game")
+    temp = input("Press x to open your previous save: ")
+
+    if temp.upper() == "X":
         with open(file_path, "r") as file:
             player_data = json.load(file)
             player.update(player_data)
-        
-    except:
-        print("previous save not found! loading default.")
-        while True:
-            name = textCleanUp(input("What is your name?"))
-            if name == "ERROR: no answer selected":
-                print("Cannot be a number")
-            else:
-                player["name"] = name
-                break
+        print(player)
 
-def save_game(choice):
+def save_game():
     file_path = "player_save.json"
+    name_change = input("What is your name? ")
+    player["name"] = name_change
 
-    if choice == "save":
+    temp = input("Press S to save your game, or D to wipe your save: ")
+
+    if temp.upper() == "S":
         with open(file_path, "w") as file:
             file.write(json.dumps(player, indent=4))
         print("Game has been saved to:", file_path)
-    elif choice == "wipe":
+    elif temp.upper() == "D":
         print("Save has been reverted to default")
 
 # ==================== Utility Functions ====================
@@ -57,7 +54,7 @@ def typewriter(text, sec):
 def textCleanUp(inp):
     if inp.isdigit():
         return "ERROR: no answer selected"
-    return inp.capitalize()
+    return inp.upper()
 
 def check_carg(player):
     IronWEIGHT = 10   
@@ -254,7 +251,6 @@ def market(player):
                 print("Invalid number!")
                 continue
             amount = int(amount)
-
             if amount > player["inventory"][item_name]:
                 print("You don't have that many!")
                 continue
@@ -281,7 +277,7 @@ def GameLoop(player):
         if playerChoice == "Q":
             playerChoice = textCleanUp(input("\nWould you like to Save your game? (Y/N)"))
             if playerChoice == "Y":
-                save_game("save")
+                save_game()
             typewriter("\nClosing game...", 0.04)
             break
         elif playerChoice == "S":
@@ -297,22 +293,18 @@ def GameLoop(player):
             elif playerChoice == "M":
                 player["location"] = "Mars"
             travel_event(player)
-    if player["dead"]:
-        typewriter("GAME OVER! Player stats:", 0.04)
-        StatsBoard()
 
 # ==================== Main ====================
 while True:
-    load_game()
+    load_game();
     playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
 
     if playPrompt == "P":
-        
         GameLoop(player)
     elif playPrompt == "D":
         confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
         if confirm == "X":
-            save_game("wipe")
+            save_game()
     elif playPrompt == "Q":
         typewriter("Leaving Game............", 0.04)
         break
