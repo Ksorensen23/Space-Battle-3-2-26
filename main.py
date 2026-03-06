@@ -295,16 +295,19 @@ def GameLoop(player):
             travel_event(player)
 
 # ==================== Main ====================
-while True:
-    load_game();
-    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
-
-    if playPrompt == "P":
-        GameLoop(player)
-    elif playPrompt == "D":
-        confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
-        if confirm == "X":
-            save_game()
-    elif playPrompt == "Q":
-        typewriter("Leaving Game............", 0.04)
-        break
+def main():
+    while True:
+        load_game();
+        playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
+    
+        if playPrompt == "P":
+            GameLoop(player)
+        elif playPrompt == "D":
+            confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
+            if confirm == "X":
+                save_game()
+        elif playPrompt == "Q":
+            typewriter("Leaving Game............", 0.04)
+            break
+if __name__ == "__main__":
+    main()
