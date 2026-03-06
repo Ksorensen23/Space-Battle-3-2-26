@@ -28,14 +28,16 @@ def load_game():
         print(player)
     except:
         print("previous save not found! loading default.")
-        player["name"] = textCleanUp(input("What is your name?"))
+        while True:
+            name = textCleanUp(input("What is your name?"))
+            if name == "ERROR: no answer selected":
+                print("Cannot be a number")
+            else:
+                player["name"] = name
+                break
 
 def save_game(choice):
     file_path = "player_save.json"
-    name_change = input("What is your name? ")
-    player["name"] = name_change
-
-    temp = input("Press S to save your game, or D to wipe your save: ")
 
     if choice == "save":
         with open(file_path, "w") as file:
