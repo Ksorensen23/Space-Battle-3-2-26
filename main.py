@@ -5,7 +5,7 @@ import json
 
 # ==================== Save creation ====================
 
-with open("player_save.json", "w") as file    # Always create a json file for the player save
+with open("player_save.json", "w") as file:    # Always create a json file for the player save
 
 player = {                         
     "name": "Ace",
