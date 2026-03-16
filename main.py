@@ -17,6 +17,16 @@ player = {
     "alive": True
 }
 
+default_player = {                         
+    "name": "Ace",
+    "credits": 100,
+    "location": "Earth",
+    "fuel": 50,
+    "max_weight": 100,
+    "inventory": {"Tacos": 2, "Iron": 0, "Fuel": 5},
+    "alive": True
+}
+
 # ==================== File Save/Load ====================
 def load_game():
     file_path = "player_save.json"
@@ -30,6 +40,7 @@ def load_game():
         print(player)
 
 def save_game():
+    global player;
     file_path = "player_save.json"
     name_change = input("What is your name? ")
     player["name"] = name_change
@@ -42,6 +53,8 @@ def save_game():
         print("Game has been saved to:", file_path)
     elif temp.upper() == "D":
         print("Save has been reverted to default")
+        with open(file_path, "w") as file:
+            file.write(json.dumps(default_player, indent=4));
 
 # ==================== Utility Functions ====================
 def typewriter(text, sec):
@@ -295,19 +308,16 @@ def GameLoop(player):
             travel_event(player)
 
 # ==================== Main ====================
-def main():
-    while True:
-        load_game();
-        playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
-    
-        if playPrompt == "P":
-            GameLoop(player)
-        elif playPrompt == "D":
-            confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
-            if confirm == "X":
-                save_game()
-        elif playPrompt == "Q":
-            typewriter("Leaving Menu............", 0.04)
-            break
-if __name__ == "__main__":
-    main()
+while True:
+    load_game();
+    playPrompt = textCleanUp(input(f"Would you like to (P)lay as {player['name']}, (D)elete {player['name']}, or (Q)uit? "))
+
+    if playPrompt == "P":
+        GameLoop(player)
+    elif playPrompt == "D":
+        confirm = textCleanUp(input("Are you sure? Press (X) to delete, anything else to go back. "))
+        if confirm == "X":
+            save_game()
+    elif playPrompt == "Q":
+        typewriter("Leaving Game............", 0.04)
+        break
