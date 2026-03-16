@@ -40,7 +40,6 @@ def load_game():
         print(player)
 
 def save_game():
-    global player;
     file_path = "player_save.json"
     name_change = input("What is your name? ")
     player["name"] = name_change
